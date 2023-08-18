@@ -48,4 +48,30 @@ router.get("/productos/:nombre", async (req, res)=>{
   }
 })
 
+//Delete
+
+router.delete("/productos/:id", async (req,res)=>{
+  try{
+
+    await productModel.findByIdAndDelete(req.params.id)
+    res.status(204).send("producto eliminado")
+
+  }catch(error){
+    res.status(500).send("Algo anda mal")
+  }
+})
+
+//Update
+router.put("/productos/:id", async(req, res)=>{
+  try{
+
+    const producto = await productModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    res.status(200).send(producto)
+
+  }catch(error){
+    res.status(500).send("Algo anda mal")
+  }
+})
+
 module.exports = router
+
